@@ -1,0 +1,29 @@
+---
+:source:
+  :path: test
+  :file: test_payload_spi.c
+:successes:
+- :test: test_setOperacionEscritura
+  :line: 14
+  :message: ''
+- :test: test_setOperacionLectura
+  :line: 21
+  :message: ''
+- :test: test_setRegistro
+  :line: 28
+  :message: ''
+- :test: test_setOperacionRegistroEscritura
+  :line: 35
+  :message: ''
+- :test: test_DatagramaCompleto
+  :line: 43
+  :message: ''
+:failures: []
+:ignores: []
+:counts:
+  :total: 5
+  :passed: 5
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 0.002043634000074235
