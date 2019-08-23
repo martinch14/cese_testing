@@ -41,12 +41,12 @@ void test_setOperacionRegistroEscritura(){
 
 
 void test_DatagramaCompleto(){
-uint8_t  operacionregistro;
-uint32_t valor=5000;
+    uint8_t  operacionregistro;
+    uint32_t valor=5000;
 
-operacionregistro= trinamicsetOperacionRegistroEscritura(OPERACION_ESCRITURA,TMC4671_PID_VELOCITY_P_VELOCITY_I);
-trinamicArmarDatagrama(datagrama,operacionregistro,valor);
+    operacionregistro= trinamicsetOperacionRegistroEscritura(OPERACION_ESCRITURA,TMC4671_PID_VELOCITY_P_VELOCITY_I);
+    trinamicArmarDatagrama(datagrama,operacionregistro,valor);
 
-TEST_ASSERT_EQUAL(0xD8,datagrama[0]);
+    TEST_ASSERT_EQUAL(0xD8,datagrama[0]);
 
 }
