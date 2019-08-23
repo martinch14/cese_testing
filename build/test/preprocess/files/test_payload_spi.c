@@ -35,7 +35,7 @@ void tearDown(void){
 
     ((void *)0)
 
-    ), (UNITY_UINT)(18), UNITY_DISPLAY_STYLE_INT);
+    ), (UNITY_UINT)(32), UNITY_DISPLAY_STYLE_INT);
 
  }
 
@@ -51,7 +51,7 @@ void tearDown(void){
 
     ((void *)0)
 
-    ), (UNITY_UINT)(24), UNITY_DISPLAY_STYLE_INT);
+    ), (UNITY_UINT)(38), UNITY_DISPLAY_STYLE_INT);
 
  }
 
@@ -65,11 +65,9 @@ void tearDown(void){
 
      registro = trinamicSetRegistro(TMC4671_PID_VELOCITY_P_VELOCITY_I);
 
-     UnityAssertEqualNumber((UNITY_INT)((0x58)), (UNITY_INT)((registro)), (
 
-    ((void *)0)
 
-    ), (UNITY_UINT)(31), UNITY_DISPLAY_STYLE_INT);
+     UnityAssertEqualNumber((UNITY_INT)((0x58)), (UNITY_INT)((registro)), (("Test sobre el registro TMC4671_PID_VELOCITY_P_VELOCITY_I")), (UNITY_UINT)(46), UNITY_DISPLAY_STYLE_INT);
 
  }
 
@@ -87,7 +85,7 @@ void test_setOperacionRegistroEscritura(){
 
    ((void *)0)
 
-   ), (UNITY_UINT)(38), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(53), UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -99,23 +97,35 @@ void test_setOperacionRegistroEscritura(){
 
 void test_DatagramaCompleto(){
 
-uint8_t operacionregistro;
+    uint8_t operacionregistro;
 
-uint32_t valor=5000;
+    uint32_t valor=5000;
 
-
-
-operacionregistro= trinamicsetOperacionRegistroEscritura(OPERACION_ESCRITURA,TMC4671_PID_VELOCITY_P_VELOCITY_I);
-
-trinamicArmarDatagrama(datagrama,operacionregistro,valor);
+    uint32_t result=0;
 
 
 
-UnityAssertEqualNumber((UNITY_INT)((0xD8)), (UNITY_INT)((datagrama[0])), (
+    operacionregistro= trinamicsetOperacionRegistroEscritura(OPERACION_ESCRITURA,TMC4671_PID_VELOCITY_P_VELOCITY_I);
 
-((void *)0)
+    trinamicArmarDatagrama(datagrama,operacionregistro,valor);
 
-), (UNITY_UINT)(50), UNITY_DISPLAY_STYLE_INT);
+
+
+    result = (datagrama[1] << 24) + (datagrama[2] << 16) + (datagrama[3] << 8) + (datagrama[4]);
+
+
+
+    UnityAssertEqualNumber((UNITY_INT)((0xD8)), (UNITY_INT)((datagrama[0])), (
+
+   ((void *)0)
+
+   ), (UNITY_UINT)(68), UNITY_DISPLAY_STYLE_INT);
+
+    UnityAssertEqualNumber((UNITY_INT)((5000)), (UNITY_INT)((result)), (
+
+   ((void *)0)
+
+   ), (UNITY_UINT)(69), UNITY_DISPLAY_STYLE_INT);
 
 
 

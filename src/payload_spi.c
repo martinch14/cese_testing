@@ -1,5 +1,18 @@
-#include "payload_spi.h"
+/**************************************************************************************************
+ ** (c) Copyright 2019: Martin Abel Gambarotta <magambarotta@gmail.com>
+ ** ALL RIGHTS RESERVED, DON'T USE OR PUBLISH THIS FILE WITHOUT AUTORIZATION
+ *************************************************************************************************/
+/** @file 	payload_spi.c
+ ** @brief 	Proceso SerialService
+ **
+ **| REV | YYYY.MM.DD | Autor           | Descripción de los cambios                              |
+ **|-----|------------|-----------------|---------------------------------------------------------|
+ **|   1 | 2019.08.23 | magambarotta    | Version inicial 									      |
+ ** @addtogroup aplicacion
+ ** @{ */
 
+/* === Inclusiones de cabeceras ================================================================ */
+#include "payload_spi.h"
 
 
 uint8_t trinamicSetOperacion(trinamicOperacion_t operacion){
@@ -8,6 +21,8 @@ uint8_t trinamicSetOperacion(trinamicOperacion_t operacion){
             return 0x80;
         case OPERACION_LECTURA:
             return 0x00;
+        default:
+            break;
     }
 }
 
@@ -41,3 +56,5 @@ void trinamicArmarDatagrama(uint8_t * datagrama, uint8_t operacionregistro, uint
     datagrama[3]=(uint8_t)((valor & 0x0000FF00) >> 8);
     datagrama[4]=(uint8_t)((valor & 0x000000FF));
 }
+
+/** @} Final de la definición del modulo para doxygen */

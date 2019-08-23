@@ -74,11 +74,11 @@ int main(void)
 {
   suite_setup();
   UnityBegin("test_payload_spi.c");
-  RUN_TEST(test_setOperacionEscritura, 14);
-  RUN_TEST(test_setOperacionLectura, 21);
-  RUN_TEST(test_setRegistro , 28);
-  RUN_TEST(test_setOperacionRegistroEscritura, 35);
-  RUN_TEST(test_DatagramaCompleto, 43);
+  RUN_TEST(test_setOperacionEscritura, 28);
+  RUN_TEST(test_setOperacionLectura, 35);
+  RUN_TEST(test_setRegistro , 42);
+  RUN_TEST(test_setOperacionRegistroEscritura, 50);
+  RUN_TEST(test_DatagramaCompleto, 58);
 
   return suite_teardown(UnityEnd());
 }
