@@ -55,7 +55,8 @@ uint8_t trinamicsetOperacionRegistroEscritura(trinamicOperacion_t operacion,trin
         return trinamicSetOperacion(operacion)  + trinamicSetRegistro(registro);
 }
 
-//Esta funciona arma un datagrama de 40 bits con la operacion y el registro ya definido, y el valor que se le quiere setear
+//Esta funcion arma un datagrama de 40 bits con la operacion y el registro ya definido, y el valor que se le quiere setear
+//Este datagrama luego sera enviado a traves del protocolo SPI
 
 void trinamicArmarDatagrama(uint8_t * datagrama, uint8_t operacionregistro, uint32_t valor ){
 
