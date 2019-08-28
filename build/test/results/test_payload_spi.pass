@@ -3,20 +3,20 @@
   :path: test
   :file: test_payload_spi.c
 :successes:
-- :test: test_setOperacionEscritura
-  :line: 28
-  :message: ''
-- :test: test_setOperacionLectura
-  :line: 35
+- :test: test_validacion_escritura
+  :line: 52
   :message: ''
 - :test: test_setRegistro
-  :line: 42
+  :line: 63
   :message: ''
-- :test: test_setOperacionRegistroEscritura
-  :line: 50
+- :test: test_transmitirDatagramaRegistroInvalido
+  :line: 78
   :message: ''
-- :test: test_DatagramaCompleto
-  :line: 58
+- :test: test_validacion_lectura
+  :line: 90
+  :message: ''
+- :test: test_leerRegistro
+  :line: 97
   :message: ''
 :failures: []
 :ignores: []
@@ -26,4 +26,4 @@
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.0021577789993898477
+:time: 0.003643851000006748

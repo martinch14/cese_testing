@@ -35,11 +35,11 @@ char* GlobalOrderError;
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
-extern void test_setOperacionEscritura();
-extern void test_setOperacionLectura();
-extern void test_setRegistro ();
-extern void test_setOperacionRegistroEscritura();
-extern void test_DatagramaCompleto();
+extern void test_validacion_escritura(void);
+extern void test_setRegistro(void);
+extern void test_transmitirDatagramaRegistroInvalido();
+extern void test_validacion_lectura(void);
+extern void test_leerRegistro(void);
 
 
 /*=======Suite Setup=====*/
@@ -74,11 +74,11 @@ int main(void)
 {
   suite_setup();
   UnityBegin("test_payload_spi.c");
-  RUN_TEST(test_setOperacionEscritura, 28);
-  RUN_TEST(test_setOperacionLectura, 35);
-  RUN_TEST(test_setRegistro , 42);
-  RUN_TEST(test_setOperacionRegistroEscritura, 50);
-  RUN_TEST(test_DatagramaCompleto, 58);
+  RUN_TEST(test_validacion_escritura, 52);
+  RUN_TEST(test_setRegistro, 63);
+  RUN_TEST(test_transmitirDatagramaRegistroInvalido, 78);
+  RUN_TEST(test_validacion_lectura, 90);
+  RUN_TEST(test_leerRegistro, 97);
 
   return suite_teardown(UnityEnd());
 }
