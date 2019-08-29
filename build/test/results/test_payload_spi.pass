@@ -4,26 +4,29 @@
   :file: test_payload_spi.c
 :successes:
 - :test: test_datagramaCrear
-  :line: 22
+  :line: 43
   :message: ''
 - :test: test_datagramaCargar
-  :line: 31
+  :line: 52
   :message: ''
 - :test: test_datagramaEnviar
-  :line: 41
+  :line: 62
   :message: ''
 - :test: test_datagramaRecibir
-  :line: 55
+  :line: 77
   :message: ''
-- :test: test_datagramaFlujo
-  :line: 66
+- :test: test_datagramaFlujoEnvioRecepcion
+  :line: 86
+  :message: ''
+- :test: test_datagramaCargarRegistroInvalido
+  :line: 103
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 5
-  :passed: 5
+  :total: 6
+  :passed: 6
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.0025181970013363753
+:time: 0.001904133998323232

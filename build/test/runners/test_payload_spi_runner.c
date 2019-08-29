@@ -39,7 +39,8 @@ extern void test_datagramaCrear(void);
 extern void test_datagramaCargar(void);
 extern void test_datagramaEnviar(void);
 extern void test_datagramaRecibir(void);
-extern void test_datagramaFlujo(void);
+extern void test_datagramaFlujoEnvioRecepcion(void);
+extern void test_datagramaCargarRegistroInvalido(void);
 
 
 /*=======Suite Setup=====*/
@@ -74,11 +75,12 @@ int main(void)
 {
   suite_setup();
   UnityBegin("test_payload_spi.c");
-  RUN_TEST(test_datagramaCrear, 22);
-  RUN_TEST(test_datagramaCargar, 31);
-  RUN_TEST(test_datagramaEnviar, 41);
-  RUN_TEST(test_datagramaRecibir, 55);
-  RUN_TEST(test_datagramaFlujo, 66);
+  RUN_TEST(test_datagramaCrear, 43);
+  RUN_TEST(test_datagramaCargar, 52);
+  RUN_TEST(test_datagramaEnviar, 62);
+  RUN_TEST(test_datagramaRecibir, 77);
+  RUN_TEST(test_datagramaFlujoEnvioRecepcion, 86);
+  RUN_TEST(test_datagramaCargarRegistroInvalido, 103);
 
   return suite_teardown(UnityEnd());
 }
