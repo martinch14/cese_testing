@@ -16,50 +16,116 @@
 #include "TMC4671_Register.h"
 
 
-static spiEnviarHandler_t enviarDatagrama;
-static spiRecibirHandler_t recibirDatagrama;
+void datagramaCrear(datagrama_t*  datagrama){
+    datagrama->operacion=0x00;
+    datagrama->registro=0x00;
+    datagrama->valor=0x00000000;
+}
 
+void datagramaCargar(uint8_t registro , uint32_t valor , datagrama_t*  datagrama){
 
-validacion_t setearRegistro(uint8_t operacion,uint8_t registro, uint32_t valor, spiEnviarHandler_t enviar){
+    /*validar con manejo de errores si el registro es erroneo*/
+    datagrama->registro= registro;
+    datagrama->valor =  valor;
+}
 
-    uint8_t  data[5];
-    validacion_t validacion;
-    enviarDatagrama= enviar;
+uint8_t*  datagramaEnviar (datagrama_t*  datagrama){
 
-    /*chequeo datagrama*/
-    if (operacion != OPERACION_ESCRITURA){
-        validacion = DATAGRAMA_INCORRECTO;
-        return validacion;
-    }
-    /* 0x7D es el ultimo registro sobre el que se puede operar*/
-    else if (registro > 0x7D ){
-        validacion = DATAGRAMA_INCORRECTO;
-        return validacion;
-    }
-    else {
-        validacion = DATAGRAMA_CORRECTO;
-        /*armo datagrama*/
-        data[0]= operacion + registro;
-        data[1]=(uint8_t)((valor & 0xFF000000) >> 24);
-        data[2]=(uint8_t)((valor & 0x00FF0000) >> 16);
-        data[3]=(uint8_t)((valor & 0x0000FF00) >> 8);
-        data[4]=(uint8_t)((valor & 0x000000FF));
-        /*lo envio*/
-         enviarDatagrama(data);
-         return validacion;
-     }
+    data[0]= datagrama->registro;
+    data[1]=(uint8_t)((datagrama->valor & 0xFF000000) >> 24);
+    data[2]=(uint8_t)((datagrama->valor & 0x00FF0000) >> 16);
+    data[3]=(uint8_t)((datagrama->valor & 0x0000FF00) >> 8);
+    data[4]=(uint8_t)((datagrama->valor & 0x000000FF));
+    return  data;
+}
+
+void datagramaRecibir ( uint8_t * dato_recibido,datagrama_t*  datagrama){
+
+    datagrama->registro=dato_recibido[0];
+    datagrama->valor=(dato_recibido[1] << 24) + (dato_recibido[2] << 16) + (dato_recibido[3] << 8) + (dato_recibido[4]);
+
 }
 
 
-validacion_t leerRegistro(uint8_t registro,spiRecibirHandler_t recibir){
-    validacion_t validacion;
-    uint8_t  data[5] = { registro,0x00,0x00,0x0F,0xFF };
-    recibirDatagrama= recibir;
-    if(registro < 0x7D){
-    recibirDatagrama(data);
-    return validacion = DATAGRAMA_CORRECTO;
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// static spiEnviarHandler_t enviarDatagrama;
+// static spiRecibirHandler_t recibirDatagrama;
+//
+//
+// validacion_t setearRegistro(uint8_t operacion,uint8_t registro, uint32_t valor, spiEnviarHandler_t enviar){
+//
+//     uint8_t  data[5];
+//     validacion_t validacion;
+//     enviarDatagrama= enviar;
+//
+//     /*chequeo datagrama*/
+//     if (operacion != OPERACION_ESCRITURA){
+//         validacion = DATAGRAMA_INCORRECTO;
+//         return validacion;
+//     }
+//     /* 0x7D es el ultimo registro sobre el que se puede operar*/
+//     else if (registro > 0x7D ){
+//         validacion = DATAGRAMA_INCORRECTO;
+//         return validacion;
+//     }
+//     else {
+//         validacion = DATAGRAMA_CORRECTO;
+//         /*armo datagrama*/
+//         data[0]= operacion + registro;
+//         data[1]=(uint8_t)((valor & 0xFF000000) >> 24);
+//         data[2]=(uint8_t)((valor & 0x00FF0000) >> 16);
+//         data[3]=(uint8_t)((valor & 0x0000FF00) >> 8);
+//         data[4]=(uint8_t)((valor & 0x000000FF));
+//         /*lo envio*/
+//         enviarDatagrama(data);
+//          return validacion;
+//      }
+// }
+//
+//
+// validacion_t leerRegistro(uint8_t registro,spiRecibirHandler_t recibir){
+//     validacion_t validacion;
+//     uint8_t  data[5] = { registro,0x00,0x00,0x0F,0xFF };
+//     recibirDatagrama= recibir;
+//     if(registro < 0x7D){
+//     recibirDatagrama(data);
+//     return validacion = DATAGRAMA_CORRECTO;
+//     }
+// }
 
 
 

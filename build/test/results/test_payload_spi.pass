@@ -3,27 +3,24 @@
   :path: test
   :file: test_payload_spi.c
 :successes:
-- :test: test_validacion_escritura
-  :line: 52
+- :test: test_datagramaCrear
+  :line: 28
   :message: ''
-- :test: test_setRegistro
-  :line: 63
+- :test: test_datagramaCargar
+  :line: 37
   :message: ''
-- :test: test_transmitirDatagramaRegistroInvalido
-  :line: 78
+- :test: test_datagramaEnviar
+  :line: 47
   :message: ''
-- :test: test_validacion_lectura
-  :line: 90
-  :message: ''
-- :test: test_leerRegistro
-  :line: 97
+- :test: test_datagramaRecibir
+  :line: 61
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 5
-  :passed: 5
+  :total: 4
+  :passed: 4
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.003643851000006748
+:time: 0.00385121299950697

@@ -5,55 +5,7 @@
 
 
 
-typedef struct {
-
-    trinamicOperacion_t operacion;
-
-    uint8_t registro;
-
-    uint32_t valor;
-
-}datagrama_t;
-
-datagrama_t datagrama;
-
-
-
-datagrama_t datagrama_recibido;
-
-
-
-
-
-
-
-
-
-
-
-
-
-void enviarDatagrama(uint8_t * data){
-
-    datagrama.operacion = data[0] & 0x80;
-
-    datagrama.registro= data[0] & 0x7F;
-
-    datagrama.valor= (data[1] << 24) + (data[2] << 16) + (data[3] << 8) + (data[4]);
-
-}
-
-
-
-void leerDatagrama(uint8_t * data){
-
-   datagrama_recibido.operacion = data[0] & 0x80;
-
-   datagrama_recibido.registro= data[0] & 0x7F;
-
-   datagrama_recibido.valor= (data[1] << 24) + (data[2] << 16) + (data[3] << 8) + (data[4]);
-
-}
+static datagrama_t datagrama;
 
 
 
@@ -71,25 +23,29 @@ void tearDown(void){
 
 
 
-void test_validacion_escritura(void){
-
-    validacion_t validacion;
-
-    uint8_t operacion = OPERACION_ESCRITURA;
-
-    uint8_t registro = 0x58;
-
-    uint32_t valor = 0x000000FF;
+void test_datagramaCrear(void){
 
 
 
-    validacion = setearRegistro(operacion,registro,valor,enviarDatagrama);
+    datagramaCrear(&datagrama);
 
-    UnityAssertEqualNumber((UNITY_INT)((0x00)), (UNITY_INT)((validacion)), (
+    UnityAssertEqualNumber((UNITY_INT)((0x00)), (UNITY_INT)((datagrama.operacion)), (
 
    ((void *)0)
 
-   ), (UNITY_UINT)(59), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(31), UNITY_DISPLAY_STYLE_INT);
+
+    UnityAssertEqualNumber((UNITY_INT)((0x00)), (UNITY_INT)((datagrama.registro)), (
+
+   ((void *)0)
+
+   ), (UNITY_UINT)(32), UNITY_DISPLAY_STYLE_INT);
+
+    UnityAssertEqualNumber((UNITY_INT)((0x00)), (UNITY_INT)((datagrama.valor)), (
+
+   ((void *)0)
+
+   ), (UNITY_UINT)(33), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -97,69 +53,27 @@ void test_validacion_escritura(void){
 
 
 
-void test_setRegistro(void){
+void test_datagramaCargar(void){
+
+    uint8_t reg=0xED;
+
+    uint32_t val=0x0000FF00;
 
 
 
-    validacion_t validacion;
+    datagramaCargar(reg,val,&datagrama);
 
-    uint8_t operacion = OPERACION_ESCRITURA;
-
-    uint8_t registro = 0x60;
-
-    uint32_t valor = 0x00FF00FF;
-
-
-
-    validacion = setearRegistro(operacion,registro,valor,enviarDatagrama);
-
-    if ( validacion == DATAGRAMA_CORRECTO){
-
-        UnityAssertEqualNumber((UNITY_INT)((0x80)), (UNITY_INT)((datagrama.operacion)), (
-
-       ((void *)0)
-
-       ), (UNITY_UINT)(72), UNITY_DISPLAY_STYLE_INT);
-
-        UnityAssertEqualNumber((UNITY_INT)((0x60)), (UNITY_INT)((datagrama.registro)), (
-
-       ((void *)0)
-
-       ), (UNITY_UINT)(73), UNITY_DISPLAY_STYLE_INT);
-
-        UnityAssertEqualNumber((UNITY_INT)((0x00FF00FF)), (UNITY_INT)((datagrama.valor)), (
-
-       ((void *)0)
-
-       ), (UNITY_UINT)(74), UNITY_DISPLAY_STYLE_INT);
-
-    }
-
-}
-
-
-
-void test_transmitirDatagramaRegistroInvalido(){
-
-
-
-    validacion_t validacion;
-
-    uint8_t operacion = OPERACION_ESCRITURA;
-
-    uint8_t registro = 0xFF;
-
-    uint32_t valor = 0x000000FF;
-
-
-
-    validacion = setearRegistro(operacion,registro,valor,enviarDatagrama);
-
-    UnityAssertEqualNumber((UNITY_INT)((DATAGRAMA_INCORRECTO)), (UNITY_INT)((validacion)), (
+    UnityAssertEqualNumber((UNITY_INT)((0xED)), (UNITY_INT)((datagrama.registro)), (
 
    ((void *)0)
 
-   ), (UNITY_UINT)(86), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(42), UNITY_DISPLAY_STYLE_INT);
+
+    UnityAssertEqualNumber((UNITY_INT)((0x0000FF00)), (UNITY_INT)((datagrama.valor)), (
+
+   ((void *)0)
+
+   ), (UNITY_UINT)(43), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -167,48 +81,58 @@ void test_transmitirDatagramaRegistroInvalido(){
 
 
 
-void test_validacion_lectura(void){
+void test_datagramaEnviar(void){
 
-    uint8_t registro = 0x50;
 
-    validacion_t validacion;
 
-    validacion = leerRegistro(registro, leerDatagrama);
+    uint8_t reg=0x40;
 
-    UnityAssertEqualNumber((UNITY_INT)((DATAGRAMA_CORRECTO)), (UNITY_INT)((validacion)), (
+    uint32_t val=0x0000FFFF;
+
+    uint8_t *datos;
+
+
+
+    datagramaCargar(reg,val,&datagrama);
+
+    datos = datagramaEnviar(&datagrama);
+
+
+
+    UnityAssertEqualNumber((UNITY_INT)((0x40)), (UNITY_INT)((datos[0])), (
 
    ((void *)0)
 
-   ), (UNITY_UINT)(94), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(56), UNITY_DISPLAY_STYLE_INT);
+
+    UnityAssertEqualNumber((UNITY_INT)((0x0000FFFF)), (UNITY_INT)(((datos[1] << 24) + (datos[2] << 16) + (datos[3] << 8) + (datos[4]))), (
+
+   ((void *)0)
+
+   ), (UNITY_UINT)(57), UNITY_DISPLAY_STYLE_INT);
+
+
 
 }
 
 
 
-void test_leerRegistro(void){
+void test_datagramaRecibir(void){
 
-    uint8_t registro = 0x50;
+    uint8_t datorecibido[5]={0x21,0x21,0x21,0x11,0x21};
 
-    validacion_t validacion;
+    datagramaRecibir(datorecibido,&datagrama);
 
-    validacion = leerRegistro(registro, leerDatagrama);
-
-    UnityAssertEqualNumber((UNITY_INT)((DATAGRAMA_CORRECTO)), (UNITY_INT)((validacion)), (
+    UnityAssertEqualNumber((UNITY_INT)((0x21)), (UNITY_INT)((datagrama.registro)), (
 
    ((void *)0)
 
-   ), (UNITY_UINT)(101), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(64), UNITY_DISPLAY_STYLE_INT);
 
-    UnityAssertEqualNumber((UNITY_INT)((0x50)), (UNITY_INT)((datagrama_recibido.registro)), (
-
-   ((void *)0)
-
-   ), (UNITY_UINT)(102), UNITY_DISPLAY_STYLE_INT);
-
-    UnityAssertEqualNumber((UNITY_INT)((0x00000FFF)), (UNITY_INT)((datagrama_recibido.valor)), (
+    UnityAssertEqualNumber((UNITY_INT)((0x21211121)), (UNITY_INT)((datagrama.valor)), (
 
    ((void *)0)
 
-   ), (UNITY_UINT)(103), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(65), UNITY_DISPLAY_STYLE_INT);
 
 }
