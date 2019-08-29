@@ -4,23 +4,26 @@
   :file: test_payload_spi.c
 :successes:
 - :test: test_datagramaCrear
-  :line: 28
+  :line: 22
   :message: ''
 - :test: test_datagramaCargar
-  :line: 37
+  :line: 31
   :message: ''
 - :test: test_datagramaEnviar
-  :line: 47
+  :line: 41
   :message: ''
 - :test: test_datagramaRecibir
-  :line: 61
+  :line: 55
+  :message: ''
+- :test: test_datagramaFlujo
+  :line: 66
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 4
-  :passed: 4
+  :total: 5
+  :passed: 5
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.00385121299950697
+:time: 0.0025181970013363753

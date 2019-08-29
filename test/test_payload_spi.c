@@ -18,12 +18,6 @@
 
 static datagrama_t datagrama;
 
-void setUp(void){
-}
-
-void tearDown(void){
-
-}
 
 void test_datagramaCrear(void){
 
@@ -60,14 +54,28 @@ void test_datagramaEnviar(void){
 
 void test_datagramaRecibir(void){
     uint8_t datorecibido[5]={0x21,0x21,0x21,0x11,0x21};
+
     datagramaRecibir(datorecibido,&datagrama);
+
     TEST_ASSERT_EQUAL(0x21,datagrama.registro);
     TEST_ASSERT_EQUAL(0x21211121,datagrama.valor);
 }
 
 
 
+void test_datagramaFlujo(void){
 
+    uint8_t reg=0x56;
+    uint32_t val=0x00EEFFFF;
+    uint8_t *datos;
+
+    datagramaCargar(reg,val,&datagrama);
+    datos = datagramaEnviar(&datagrama);
+    datagramaRecibir(datos,&datagrama);
+
+    TEST_ASSERT_EQUAL(0x56,datos[0]);
+    TEST_ASSERT_EQUAL(0x00EEFFFF, (datos[1] << 24) + (datos[2] << 16) + (datos[3] << 8) + (datos[4]));
+}
 
 
 
